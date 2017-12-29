@@ -70,8 +70,6 @@
                         "domain",
                         "url"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0
                 }
             },
@@ -518,8 +516,6 @@
                     "contains": [
                         "ip"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0
                 }
             },
