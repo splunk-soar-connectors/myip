@@ -1,7 +1,7 @@
 {
     "appid": "d4e6221a-ed51-4c5d-9e5d-eccfed3bcdd4",
     "name": "Myip",
-    "description": "The app integrates with the Myip.ms service to implement investigative action",
+    "description": "The app integrates with the Myip.ms service to implement investigative actions",
     "type": "information",
     "product_vendor": "Myip.ms",
     "logo": "logo_myipms.svg",
