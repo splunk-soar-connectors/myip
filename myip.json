@@ -9,7 +9,7 @@
     "product_name": "Myip.ms",
     "product_version_regex": ".*",
     "publisher": "Phantom",
-    "license": "Copyright (c) Phantom Cyber Corporation, 2017-2018",
+    "license": "Copyright (c) Phantom Cyber Corporation, 2018",
     "app_version": "1.0.1",
     "utctime_updated": "2018-01-05T01:09:02.000000Z",
     "package_name": "phantom_myip",
