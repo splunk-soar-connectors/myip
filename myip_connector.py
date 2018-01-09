@@ -192,7 +192,10 @@ class MyipConnector(BaseConnector):
         # Add the response into the data section
         action_result.add_data(response)
 
-        summary.update({'found': True})
+        status = response.get('status')
+
+        if (status) and (status.lower().strip() == 'ok'):
+            summary.update({'found': True})
 
         return action_result.set_status(phantom.APP_SUCCESS)
 

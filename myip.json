@@ -90,7 +90,8 @@
                         "url"
                     ],
                     "example_values": [
-                        "google.com"
+                        "google.com",
+                        "http://www.mydomaindoesnotexist.com/"
                     ]
                 },
                 {
@@ -147,6 +148,13 @@
                     "data_type": "string",
                     "example_values": [
                         "229"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.error_desc",
+                    "data_type": "string",
+                    "example_values": [
+                        "Invalid IP/Website"
                     ]
                 },
                 {
@@ -390,7 +398,8 @@
                     "data_path": "action_result.data.*.query",
                     "data_type": "string",
                     "example_values": [
-                        "google.com"
+                        "google.com",
+                        "www.mydomaindoesnotexist.com"
                     ]
                 },
                 {
@@ -451,7 +460,8 @@
                     "data_path": "action_result.data.*.status",
                     "data_type": "string",
                     "example_values": [
-                        "ok"
+                        "ok",
+                        "error"
                     ]
                 },
                 {
@@ -476,7 +486,8 @@
                     "data_type": "string",
                     "example_values": [
                         "",
-                        "Found: True"
+                        "Found: True",
+                        "Found: False"
                     ]
                 },
                 {
