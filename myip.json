@@ -1,0 +1,1205 @@
+{
+    "appid": "d4e6221a-ed51-4c5d-9e5d-eccfed3bcdd4",
+    "name": "Myip",
+    "description": "This app integrates with the Myip.ms service to implement investigative actions",
+    "type": "information",
+    "product_vendor": "Myip.ms",
+    "logo": "logo_myipms.svg",
+    "logo_dark": "logo_myipms_dark.svg",
+    "product_name": "Myip.ms",
+    "product_version_regex": ".*",
+    "publisher": "Phantom",
+    "license": "Copyright (c) Phantom Cyber Corporation, 2018",
+    "app_version": "1.0.3",
+    "utctime_updated": "2018-01-09T01:15:15.000000Z",
+    "package_name": "phantom_myip",
+    "main_module": "myip_connector.pyc",
+    "min_phantom_version": "3.0.251",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "base_url": {
+            "description": "API Base URL",
+            "data_type": "string",
+            "required": true,
+            "default": "https://api.myip.ms",
+            "order": 0
+        },
+        "ph": {
+            "data_type": "ph",
+            "order": 1
+        },
+        "api_id": {
+            "description": "API ID",
+            "data_type": "string",
+            "required": true,
+            "order": 2
+        },
+        "api_key": {
+            "description": "API Key",
+            "data_type": "password",
+            "required": true,
+            "order": 3
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity",
+            "verbose": "",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "whois domain",
+            "identifier": "whois_domain",
+            "description": "Execute whois lookup on the given domain",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "domain": {
+                    "description": "Domain to query",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "domain",
+                        "url"
+                    ],
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "failed",
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.domain",
+                    "data_type": "string",
+                    "contains": [
+                        "domain",
+                        "url"
+                    ],
+                    "example_values": [
+                        "google.com",
+                        "http://www.mydomaindoesnotexist.com/"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns.*.countryID",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns.*.countryIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/devices/16/flags/USA.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns.*.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns.*.ip_address",
+                    "data_type": "string",
+                    "example_values": [
+                        "216.239.32.10"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns.*.nameserver",
+                    "data_type": "string",
+                    "example_values": [
+                        "ns1.google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns.*.sites",
+                    "data_type": "string",
+                    "example_values": [
+                        "709",
+                        "710"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns.*.topSites",
+                    "data_type": "string",
+                    "example_values": [
+                        "229"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.error_desc",
+                    "data_type": "string",
+                    "example_values": [
+                        "Invalid IP/Website"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_address",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.217.13.238"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_change_history.*.date_when_found_that_website_changed_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "27 Dec 2017"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_change_history.*.date_when_website_was_using_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "27 Dec 2017"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_change_history.*.host",
+                    "data_type": "string",
+                    "example_values": [
+                        "lga25s62-in-f14.1e100.net"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_change_history.*.ip_address",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.217.12.174"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ipv6_address",
+                    "data_type": "string",
+                    "example_values": [
+                        "2607:f8b0:4004:809::200e"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.location.countryID",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.location.countryIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/devices/16/flags/USA.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.location.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "United States"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.address",
+                    "data_type": "string",
+                    "example_values": [
+                        "1600 Amphitheatre Parkway, Mountain View, CA, 94043, US"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.cidr",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.217.0.0/16"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.countryID",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.countryIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/devices/16/flags/USA.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.link",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/view/ip_owners/617"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.logo",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/docs/ip_owners/1/google_inc_logo.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.ownerName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Google Inc"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.phone",
+                    "data_type": "string",
+                    "example_values": [
+                        "+1-650-253-0000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.provider",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.range",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.217.0.0 - 172.217.255.255"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.rangeSize",
+                    "data_type": "string",
+                    "example_values": [
+                        "65536"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.screenshot",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/docs/ip_owners/1/google-inc.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.sites",
+                    "data_type": "string",
+                    "example_values": [
+                        "130006"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.topSites",
+                    "data_type": "string",
+                    "example_values": [
+                        "1848"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.website",
+                    "data_type": "string",
+                    "example_values": [
+                        "sites.google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.popularity.image",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/popularity/rating10.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.popularity.rank",
+                    "data_type": "string",
+                    "example_values": [
+                        "1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.popularity.rankWebsite",
+                    "data_type": "string",
+                    "example_values": [
+                        "google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.popularity.text",
+                    "data_type": "string",
+                    "example_values": [
+                        "655,000,000 visitors per day"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.popularity.visitors",
+                    "data_type": "string",
+                    "example_values": [
+                        "655000000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.query",
+                    "data_type": "string",
+                    "example_values": [
+                        "google.com",
+                        "www.mydomaindoesnotexist.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.reverse_dns.host",
+                    "data_type": "string",
+                    "example_values": [
+                        "iad23s61-in-f4.1e100.net"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.reverse_dns.topHost.countryID",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.reverse_dns.topHost.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.reverse_dns.topHost.ip_address",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.reverse_dns.topHost.sites",
+                    "data_type": "string",
+                    "example_values": [
+                        "44474",
+                        "44470"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.reverse_dns.topHost.text",
+                    "data_type": "string",
+                    "example_values": [
+                        "44,474 sites use XXX.1e100.net as IP Reverse DNS",
+                        "44,470 sites use XXX.1e100.net as IP Reverse DNS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.reverse_dns.topHost.topHostName",
+                    "data_type": "string",
+                    "example_values": [
+                        "1e100.net"
+                    ],
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "ok",
+                        "error"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.website",
+                    "data_type": "string",
+                    "example_values": [
+                        "google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.found",
+                    "data_type": "boolean",
+                    "column_name": "Found",
+                    "column_order": 4,
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "",
+                        "Found: True",
+                        "Found: False"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2,
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "json"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "whois ip",
+            "identifier": "whois_ip",
+            "description": "Execute whois lookup on the given IP address",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "ip": {
+                    "description": "IP to query",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "ip"
+                    ],
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ],
+                    "example_values": [
+                        "8.8.8.8"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.browsers_on_ip.*.browser",
+                    "data_type": "string",
+                    "example_values": [
+                        "Firefox 10"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.browsers_on_ip.*.browserIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/browsers/0/6.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.crawlerbot_use_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "yes"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns_on_ip.*.nameserver",
+                    "data_type": "string",
+                    "example_values": [
+                        "google-public-dns-a.google.com"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns_on_ip.*.sites",
+                    "data_type": "string",
+                    "example_values": [
+                        "50"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.dns_on_ip.*.topSites",
+                    "data_type": "string",
+                    "example_values": [
+                        "3"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_address",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.8.8.8"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_blacklist.blacklist",
+                    "data_type": "string",
+                    "example_values": [
+                        "yes"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_blacklist.latest_site_visit_date",
+                    "data_type": "string",
+                    "example_values": [
+                        "29 Oct 2016"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ip_blacklist.latest_thread",
+                    "data_type": "string",
+                    "example_values": [
+                        "Fake Google Bot"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.location.countryID",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.location.countryIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/devices/16/flags/USA.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.location.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "United States"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.not_working_websites_on_ip.*.date_when_website_was_using_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "10 Jun 2017"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.not_working_websites_on_ip.*.image",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/popularity/rating4.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.not_working_websites_on_ip.*.rank",
+                    "data_type": "string",
+                    "example_values": [
+                        "228287"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.not_working_websites_on_ip.*.text",
+                    "data_type": "string",
+                    "example_values": [
+                        "3,720 visitors per day on 10 Jun 2017"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.not_working_websites_on_ip.*.visitors",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3720
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.not_working_websites_on_ip.*.website",
+                    "data_type": "string",
+                    "example_values": [
+                        "qqwuhan.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.os_on_ip.*.os",
+                    "data_type": "string",
+                    "example_values": [
+                        "GNU/Linux x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.os_on_ip.*.osIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/os/0/5.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.address",
+                    "data_type": "string",
+                    "example_values": [
+                        "1600 Amphitheatre Parkway, Mountain View, CA, 94043, US"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.cidr",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.8.8.0/24"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.countryID",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.countryIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/devices/16/flags/USA.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.link",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/view/ip_owners/617"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.logo",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/docs/ip_owners/1/google_inc_logo.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.ownerName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Google Inc"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.phone",
+                    "data_type": "string",
+                    "example_values": [
+                        "+1-650-253-0000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.provider",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.range",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.8.8.0 - 8.8.8.255"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.rangeSize",
+                    "data_type": "string",
+                    "example_values": [
+                        "256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.screenshot",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/docs/ip_owners/1/google-inc.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.sites",
+                    "data_type": "string",
+                    "example_values": [
+                        "130006"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.topSites",
+                    "data_type": "string",
+                    "example_values": [
+                        "1848"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.owner.website",
+                    "data_type": "string",
+                    "example_values": [
+                        "sites.google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.address",
+                    "data_type": "string",
+                    "example_values": [
+                        "1025 Eldorado Blvd. Broomfield, CO, 80021, US"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.cidr",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.0.0.0/8"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.countryID",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.countryIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/devices/16/flags/USA.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "USA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.link",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/view/ip_owners/99"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.logo",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/docs/ip_owners/level_3_communications_inc_logo.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.ownerName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Level 3 Communications, Inc"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.phone",
+                    "data_type": "string",
+                    "example_values": [
+                        "+1-877-453-8353, +1-303-414-5000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.provider",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.range",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.0.0.0 - 8.255.255.255"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.rangeSize",
+                    "data_type": "string",
+                    "example_values": [
+                        "16777216"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.screenshot",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/docs/ip_owners/level3com.jpg"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.sites",
+                    "data_type": "string",
+                    "example_values": [
+                        "5774"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.topSites",
+                    "data_type": "string",
+                    "example_values": [
+                        "167"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.parent_owner.website",
+                    "data_type": "string",
+                    "example_values": [
+                        "www.level3.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.query",
+                    "data_type": "string",
+                    "example_values": [
+                        "8.8.8.8"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.statistics.total_browsers_on_ip",
+                    "data_type": "numeric",
+                    "example_values": [
+                        11
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.statistics.total_dns_on_ip",
+                    "data_type": "numeric",
+                    "example_values": [
+                        14
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.statistics.total_not_working_websites_on_ip",
+                    "data_type": "numeric",
+                    "example_values": [
+                        98
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.statistics.total_os_on_ip",
+                    "data_type": "numeric",
+                    "example_values": [
+                        8
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.statistics.total_useragents_on_ip",
+                    "data_type": "numeric",
+                    "example_values": [
+                        11
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.statistics.total_websites_on_ip_before",
+                    "data_type": "string",
+                    "example_values": [
+                        "635"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.statistics.total_websites_on_ip_now",
+                    "data_type": "string",
+                    "example_values": [
+                        "343"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "ok"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.useragents_on_ip.*.browser",
+                    "data_type": "string",
+                    "example_values": [
+                        "Firefox 48"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.useragents_on_ip.*.browserIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/browsers/6/2669.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.useragents_on_ip.*.latest_site_visit_date",
+                    "data_type": "string",
+                    "example_values": [
+                        "10 Dec 2017"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.useragents_on_ip.*.os",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows 10 x64 Edition"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.useragents_on_ip.*.osIcon",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/os/7/2874.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.useragents_on_ip.*.useragent",
+                    "data_type": "string",
+                    "example_values": [
+                        "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_before.*.date_when_found_that_website_changed_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "10 Mar 2013"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_before.*.date_when_website_was_using_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "13 Feb 2013"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_before.*.image",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/popularity/rating1.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_before.*.rank",
+                    "data_type": "string",
+                    "example_values": [
+                        "967398"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_before.*.text",
+                    "data_type": "string",
+                    "example_values": [
+                        "332 visitors per day on 13 Feb 2013"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_before.*.visitors",
+                    "data_type": "numeric",
+                    "example_values": [
+                        332
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_before.*.website",
+                    "data_type": "string",
+                    "example_values": [
+                        "buyonme.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_now.*.image",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://myip.ms/images/popularity/rating5.png"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_now.*.rank",
+                    "data_type": "string",
+                    "example_values": [
+                        "57227"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_now.*.text",
+                    "data_type": "string",
+                    "example_values": [
+                        "9,130 visitors per day"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_now.*.visitors",
+                    "data_type": "string",
+                    "example_values": [
+                        "9130"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.websites_on_ip_now.*.website",
+                    "data_type": "string",
+                    "example_values": [
+                        "www.myp2pch.net"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.found",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "",
+                        "Found: True"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "json"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}
