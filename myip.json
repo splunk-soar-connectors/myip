@@ -8,13 +8,17 @@
     "logo_dark": "logo_myipms_dark.svg",
     "product_name": "Myip.ms",
     "product_version_regex": ".*",
-    "publisher": "Phantom",
-    "license": "Copyright (c) Phantom Cyber Corporation, 2018",
-    "app_version": "1.0.5",
+    "publisher": "Splunk",
+    "license": "Copyright (c) 2018-2021 Splunk Inc.",
+    "app_version": "2.0.0",
     "utctime_updated": "2018-12-07T02:09:10.000000Z",
     "package_name": "phantom_myip",
-    "main_module": "myip_connector.pyc",
-    "min_phantom_version": "3.0.251",
+    "main_module": "myip_connector.py",
+    "min_phantom_version": "4.9.39220",
+    "latest_tested_versions": [
+        "Myip.ms Cloud, 2021 on 01/28/2021"
+    ],
+    "python_version": "3",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "base_url": {
@@ -46,7 +50,6 @@
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity",
-            "verbose": "",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -57,7 +60,6 @@
             "action": "whois domain",
             "identifier": "whois_domain",
             "description": "Execute whois lookup on the given domain",
-            "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -125,7 +127,8 @@
                         "216.239.32.10"
                     ],
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -164,7 +167,8 @@
                         "172.217.13.238"
                     ],
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -188,7 +192,8 @@
                         "lga25s62-in-f14.1e100.net"
                     ],
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -198,7 +203,8 @@
                         "172.217.12.174"
                     ],
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -306,10 +312,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.owners.owner.provider",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.owners.owner.range",
@@ -411,24 +414,15 @@
                 },
                 {
                     "data_path": "action_result.data.*.reverse_dns.topHost.countryID",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.reverse_dns.topHost.countryName",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.reverse_dns.topHost.ip_address",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.reverse_dns.topHost.sites",
@@ -485,7 +479,6 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "",
                         "Found: True",
                         "Found: False"
                     ]
@@ -515,7 +508,6 @@
             "action": "whois ip",
             "identifier": "whois_ip",
             "description": "Execute whois lookup on the given IP address",
-            "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -525,7 +517,8 @@
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ],
                     "order": 0
                 }
@@ -535,14 +528,16 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
                     "data_path": "action_result.parameter.ip",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ],
                     "example_values": [
                         "8.8.8.8"
@@ -579,7 +574,8 @@
                         "google-public-dns-a.google.com"
                     ],
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -603,7 +599,8 @@
                         "8.8.8.8"
                     ],
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -787,10 +784,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.owners.owner.provider",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.owners.owner.range",
@@ -911,10 +905,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.owners.parent_owner.provider",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.owners.parent_owner.range",
@@ -968,7 +959,8 @@
                         "8.8.8.8"
                     ],
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -987,9 +979,9 @@
                 },
                 {
                     "data_path": "action_result.data.*.statistics.total_not_working_websites_on_ip",
-                    "data_type": "numeric",
+                    "data_type": "string",
                     "example_values": [
-                        98
+                        "98"
                     ]
                 },
                 {
@@ -1124,7 +1116,7 @@
                     "data_path": "action_result.data.*.websites_on_ip_before.*.website",
                     "data_type": "string",
                     "example_values": [
-                        "buyonme.com"
+                        "test.com"
                     ]
                 },
                 {
@@ -1177,7 +1169,6 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "",
                         "Found: True"
                     ]
                 },
