@@ -1,14 +1,10 @@
 # --
 # File: myip_connector.py
 #
-# Copyright (c) Phantom Cyber Corporation, 2018
+# Copyright (c) 2018-2021 Splunk Inc.
 #
-# This unpublished material is proprietary to Phantom Cyber.
-# All rights reserved. The methods and
-# techniques described herein are considered trade secrets
-# and/or confidential. Reproduction or distribution, in whole
-# or in part, is forbidden except by express written permission
-# of Phantom Cyber Corporation.
+# SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
+# without a valid written license from Splunk Inc. is PROHIBITED.
 #
 # --
 
@@ -22,8 +18,13 @@ from phantom.action_result import ActionResult
 import requests
 import json
 from bs4 import BeautifulSoup
-import md5
+try:
+    import md5
+except ImportError:
+    import hashlib
 from datetime import datetime
+import sys
+import ipaddress
 
 
 class RetVal(tuple):
@@ -44,6 +45,7 @@ class MyipConnector(BaseConnector):
         # Do note that the app json defines the asset config, so please
         # modify this as you deem fit.
         self._base_url = None
+        self._python_version = None
 
     def _process_empty_reponse(self, response, action_result):
 
@@ -126,6 +128,24 @@ class MyipConnector(BaseConnector):
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
+    def _is_ip(self, input_ip_address):
+        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+        :param input_ip_address: IP address
+        :return: status (success/failure)
+        """
+
+        ip_address_input = input_ip_address
+
+        try:
+            try:
+                ipaddress.ip_address(unicode(ip_address_input))
+            except NameError:
+                ipaddress.ip_address(str(ip_address_input))
+        except:
+            return False
+
+        return True
+
     def _make_rest_call(self, query_object, action_result):
 
         config = self.get_config()
@@ -139,7 +159,7 @@ class MyipConnector(BaseConnector):
         url_part_2 = 'timestamp/{0}'.format(time_stamp)
         url_for_signature = '{0}/{1}'.format(url_part_1, url_part_2)
 
-        signature = md5.new(url_for_signature).hexdigest()
+        signature = md5.new(url_for_signature).hexdigest() if self._python_version < 3 else hashlib.md5(url_for_signature.encode()).hexdigest()
 
         url = '{0}/signature/{1}/{2}'.format(url_part_1, signature, url_part_2)
 
@@ -159,8 +179,9 @@ class MyipConnector(BaseConnector):
 
         # make rest call
         ret_val, response = self._make_rest_call('myip.ms', action_result)
+        status = response.get('status') if response else None
 
-        if (phantom.is_fail(ret_val)):
+        if (phantom.is_fail(ret_val) or (status and status.lower().strip() != 'ok')):
             self.save_progress("Test Connectivity Failed")
             return action_result.get_status()
 
@@ -207,6 +228,10 @@ class MyipConnector(BaseConnector):
 
         ip = param['ip']
 
+        # Validation for checking valid IP or not (IPV4 as well as IPV6)
+        if not self._is_ip(ip):
+            return action_result.set_status(phantom.APP_ERROR, 'Please provide a valid IPV4 or IPV6 address')
+
         # make rest call
         ret_val, response = self._make_rest_call(ip, action_result)
 
@@ -251,6 +276,11 @@ class MyipConnector(BaseConnector):
 
         self._base_url = config.get('base_url').rstrip('/')
 
+        try:
+            self._python_version = int(sys.version_info[0])
+        except:
+            return self.set_status(phantom.APP_ERROR, "Error occurred while getting the Phantom server's Python major version.")
+
         return phantom.APP_SUCCESS
 
     def finalize(self):
@@ -287,8 +317,8 @@ if __name__ == '__main__':
 
     if (username and password):
         try:
-            print ("Accessing the Login page")
-            r = requests.get("https://127.0.0.1/login", verify=False)
+            print("Accessing the Login page")
+            r = requests.get(BaseConnector._get_phantom_base_url() + "login", verify=False)
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -298,13 +328,13 @@ if __name__ == '__main__':
 
             headers = dict()
             headers['Cookie'] = 'csrftoken=' + csrftoken
-            headers['Referer'] = 'https://127.0.0.1/login'
+            headers['Referer'] = BaseConnector._get_phantom_base_url() + "login"
 
-            print ("Logging into Platform to get the session id")
-            r2 = requests.post("https://127.0.0.1/login", verify=False, data=data, headers=headers)
+            print("Logging into Platform to get the session id")
+            r2 = requests.post(BaseConnector._get_phantom_base_url() + "login", verify=False, data=data, headers=headers)
             session_id = r2.cookies['sessionid']
         except Exception as e:
-            print ("Unable to get session id from the platfrom. Error: " + str(e))
+            print("Unable to get session id from the platfrom. Error: " + str(e))
             exit(1)
 
     with open(args.input_test_json) as f:
@@ -320,6 +350,6 @@ if __name__ == '__main__':
             connector._set_csrf_info(csrftoken, headers['Referer'])
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
-        print (json.dumps(json.loads(ret_val), indent=4))
+        print(json.dumps(json.loads(ret_val), indent=4))
 
     exit(0)
