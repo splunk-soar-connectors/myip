@@ -15,6 +15,7 @@
     "package_name": "phantom_myip",
     "main_module": "myip_connector.py",
     "min_phantom_version": "4.9.39220",
+    "fips_compliant": false,
     "latest_tested_versions": [
         "Myip.ms Cloud, 2021 on 01/28/2021"
     ],
