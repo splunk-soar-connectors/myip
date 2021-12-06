@@ -470,7 +470,7 @@
                     "data_path": "action_result.summary.found",
                     "data_type": "boolean",
                     "column_name": "Found",
-                    "column_order": 4,
+                    "column_order": 0,
                     "example_values": [
                         true,
                         false
