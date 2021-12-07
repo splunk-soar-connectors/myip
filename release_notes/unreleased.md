@@ -1,3 +1,3 @@
 **Unreleased**
-FIPS Compliance - Mark as not compliant [PAPP-21474]
+* FIPS Compliance - Mark as not compliant [PAPP-21474]
 
