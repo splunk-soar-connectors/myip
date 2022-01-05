@@ -9,7 +9,7 @@
     "product_name": "Myip.ms",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2021 Splunk Inc.",
+    "license": "Copyright (c) 2018-2022 Splunk Inc.",
     "app_version": "2.0.4",
     "utctime_updated": "2021-12-06T21:31:24.000000Z",
     "package_name": "phantom_myip",
