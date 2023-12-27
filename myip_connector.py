@@ -1,6 +1,6 @@
 # File: myip_connector.py
 #
-# Copyright (c) 2018-2021 Splunk Inc.
+# Copyright (c) 2018-2023 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -202,6 +202,7 @@ class MyipConnector(BaseConnector):
         # Implement the handler here
         # use self.save_progress(...) to send progress messages back to the platform
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+        self.save_progress("Querying for domain")
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -231,6 +232,9 @@ class MyipConnector(BaseConnector):
     def _handle_whois_ip(self, param):
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+        self.save_progress("Querying for IP")
+
         action_result = self.add_action_result(ActionResult(dict(param)))
         summary = action_result.update_summary({'found': False})
 
