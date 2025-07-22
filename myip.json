@@ -19,7 +19,7 @@
     "latest_tested_versions": [
         "Myip.ms Cloud, 2021 on 01/28/2021"
     ],
-    "python_version": "3",
+    "python_version": ["3.9", "3.13"],
     "app_wizard_version": "1.0.0",
     "configuration": {
         "base_url": {
