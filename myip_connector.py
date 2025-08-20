@@ -29,7 +29,9 @@ from phantom.base_connector import BaseConnector
 
 try:
     import md5
+    hashlib = None
 except ImportError:
+    md5 = None
     import hashlib
 
 import ipaddress
