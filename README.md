@@ -1,7 +1,7 @@
 # Myip
 
 Publisher: Splunk <br>
-Connector Version: 2.0.6 <br>
+Connector Version: 2.0.7 <br>
 Product Vendor: Myip.ms <br>
 Product Name: Myip.ms <br>
 Minimum Product Version: 4.9.39220
