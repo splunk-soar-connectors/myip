@@ -1,7 +1,3 @@
 **Unreleased**
-* Update Python dependencies for vulnerabilities, package updates, and platform built-in removals
-* Update Python dependencies for Python 3.13 support
-* Update NOTICE file with updated dependencies
-* Apply pre-commit fixes
-* Remove beautifulsoup4 from requirements.txt
-* Resolved app issues related to Python 3.13 upgrade
+* Update Python dependencies and code for Python 3.13 support
+* Update Python version for 3.13

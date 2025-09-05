@@ -1,9 +1,9 @@
 # Myip
 
-Publisher: Splunk \
-Connector Version: 2.0.6 \
-Product Vendor: Myip.ms \
-Product Name: Myip.ms \
+Publisher: Splunk <br>
+Connector Version: 2.0.6 <br>
+Product Vendor: Myip.ms <br>
+Product Name: Myip.ms <br>
 Minimum Product Version: 4.9.39220
 
 This app integrates with the Myip.ms service to implement investigative actions
@@ -20,15 +20,15 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity \
-[whois domain](#action-whois-domain) - Execute whois lookup on the given domain \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity <br>
+[whois domain](#action-whois-domain) - Execute whois lookup on the given domain <br>
 [whois ip](#action-whois-ip) - Execute whois lookup on the given IP address
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -43,7 +43,7 @@ No Output
 
 Execute whois lookup on the given domain
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -115,7 +115,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Execute whois lookup on the given IP address
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
