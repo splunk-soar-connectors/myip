@@ -1,1 +1,3 @@
 **Unreleased**
+
+* Redact the asset API key from transport errors, upstream error responses, and debug data.

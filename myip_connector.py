@@ -1,6 +1,6 @@
 # File: myip_connector.py
 #
-# Copyright (c) 2018-2025 Splunk Inc.
+# Copyright (c) 2018-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ except ImportError:
 import ipaddress
 import sys
 from datetime import datetime
+from urllib.parse import quote, quote_plus
 
 
 class RetVal(tuple):
@@ -58,6 +59,25 @@ class MyipConnector(BaseConnector):
         self._base_url = None
         self._python_version = None
 
+    def _redact_sensitive_data(self, value):
+        """Remove asset credentials from values included in action results or debug data."""
+        api_key = str(self.get_config().get("api_key", ""))
+
+        if isinstance(value, str):
+            if not api_key:
+                return value
+            for representation in {api_key, quote(api_key, safe=""), quote_plus(api_key, safe="")}:
+                value = value.replace(representation, "<redacted>")
+            return value
+        if isinstance(value, dict):
+            return {key: self._redact_sensitive_data(item) for key, item in value.items()}
+        if isinstance(value, list):
+            return [self._redact_sensitive_data(item) for item in value]
+        if isinstance(value, tuple):
+            return tuple(self._redact_sensitive_data(item) for item in value)
+
+        return value
+
     def _process_empty_reponse(self, response, action_result):
         if response.status_code == 200:
             return RetVal(phantom.APP_SUCCESS, {})
@@ -77,7 +97,7 @@ class MyipConnector(BaseConnector):
         except:
             error_text = "Cannot parse error details"
 
-        message = f"Status Code: {status_code}. Data from server:\n{error_text}\n"
+        message = f"Status Code: {status_code}. Data from server:\n{self._redact_sensitive_data(error_text)}\n"
 
         message = message.replace("{", "{{").replace("}", "}}")
 
@@ -95,7 +115,10 @@ class MyipConnector(BaseConnector):
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
         # You should process the error returned in the json
-        message = "Error from server. Status Code: {} Data from server: {}".format(r.status_code, r.text.replace("{", "{{").replace("}", "}}"))
+        response_text = self._redact_sensitive_data(r.text)
+        message = "Error from server. Status Code: {} Data from server: {}".format(
+            r.status_code, response_text.replace("{", "{{").replace("}", "}}")
+        )
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -103,8 +126,8 @@ class MyipConnector(BaseConnector):
         # store the r_text in debug data, it will get dumped in the logs if the action fails
         if hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data({"r_status_code": r.status_code})
-            action_result.add_debug_data({"r_text": r.text})
-            action_result.add_debug_data({"r_headers": r.headers})
+            action_result.add_debug_data({"r_text": self._redact_sensitive_data(r.text)})
+            action_result.add_debug_data({"r_headers": self._redact_sensitive_data(dict(r.headers))})
 
         # Process each 'Content-Type' of response separately
 
@@ -128,8 +151,9 @@ class MyipConnector(BaseConnector):
             return self._process_empty_reponse(r, action_result)
 
         # everything else is actually an error at this point
+        response_text = self._redact_sensitive_data(r.text)
         message = "Can't process response from server. Status Code: {} Data from server: {}".format(
-            r.status_code, r.text.replace("{", "{{").replace("}", "}}")
+            r.status_code, response_text.replace("{", "{{").replace("}", "}}")
         )
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
@@ -171,7 +195,8 @@ class MyipConnector(BaseConnector):
         try:
             r = requests.get(url)
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. Details: {e!s}"), resp_json)
+            error_detail = self._redact_sensitive_data(str(e))
+            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. Details: {error_detail}"), resp_json)
 
         return self._process_response(r, action_result)
 
